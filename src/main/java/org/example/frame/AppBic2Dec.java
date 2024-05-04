@@ -23,7 +23,6 @@ public class AppBic2Dec extends JFrame {
 
     public AppBic2Dec(){
         pattern= Pattern.compile("[01]{8}");
-
     }
 
     public void createApp() {
@@ -35,11 +34,11 @@ public class AppBic2Dec extends JFrame {
         setLocationRelativeTo(null);
         addAction(this);
         prepareGUI();
+        add(controlPanel);
     }
 
     public void prepareGUI() {
-        controlPanel.removeAll();
-        controlPanel.repaint();
+
         GridBagLayout layout = new GridBagLayout();
         controlPanel.setLayout(layout);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -59,7 +58,6 @@ public class AppBic2Dec extends JFrame {
         gbc.gridy = 2;
         gbc.insets = new Insets(10, 10, 0, 30);
         controlPanel.add(change, gbc);
-        add(controlPanel);
     }
 
     public void addFieldsDec(GridBagConstraints gbc) {
@@ -88,7 +86,6 @@ public class AppBic2Dec extends JFrame {
     }
 
     public void addFieldsBic(GridBagConstraints gbc) {
-
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -111,8 +108,6 @@ public class AppBic2Dec extends JFrame {
         gbc.gridy = 1;
         gbc.insets = new Insets(10, 0, 0, 30);
         controlPanel.add(textFieldBic, gbc);
-
-
     }
 
     private void addAction(JFrame frame) {
@@ -133,9 +128,7 @@ public class AppBic2Dec extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controlPanel.removeAll();
-                controlPanel.revalidate();
                 prepareGUI();
-                frame.setContentPane(controlPanel);
                 controlPanel.repaint();
             }
         });
