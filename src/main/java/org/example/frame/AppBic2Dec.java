@@ -11,13 +11,16 @@ import static org.example.Main.Bic2Dec;
 
 public class AppBic2Dec extends JFrame {
     private JPanel controlPanel = new JPanel();
+    private PanelDec panelDec;
+    private PanelBic panelBic;
+    private GridBagConstraints gbc;
     private JLabel bic = new JLabel("Двоичная система");
     private JLabel dec = new JLabel("Десятичная система");
     private JTextField textFieldBic = new JTextField();
     private JTextField textFieldDec = new JTextField();
     private JButton translate = new JButton("Перевести");
     private JButton change = new JButton("Поменять");
-    private boolean isBic;
+    private boolean isBic = false;
     private Pattern pattern;
     private Matcher matcher;
 
@@ -26,6 +29,12 @@ public class AppBic2Dec extends JFrame {
     }
 
     public void createApp() {
+
+        prepareGUI();
+        add(controlPanel);
+    }
+
+    public void prepareGUI() {
         setIconImage(new ImageIcon("src/main/resources/images.png").getImage());
         setTitle("From Bic to Dec");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,31 +42,6 @@ public class AppBic2Dec extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         addAction(this);
-        prepareGUI();
-        add(controlPanel);
-    }
-
-    public void prepareGUI() {
-
-        GridBagLayout layout = new GridBagLayout();
-        controlPanel.setLayout(layout);
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        if (!isBic)
-            addFieldsDec(gbc);
-        else
-            addFieldsBic(gbc);
-
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.insets = new Insets(10, 30, 0, 10);
-        controlPanel.add(translate, gbc);
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.insets = new Insets(10, 10, 0, 30);
-        controlPanel.add(change, gbc);
     }
 
     public void addFieldsDec(GridBagConstraints gbc) {
@@ -127,9 +111,14 @@ public class AppBic2Dec extends JFrame {
         change.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controlPanel.removeAll();
-                prepareGUI();
-                controlPanel.repaint();
+                removeAll();
+                if(!isBic)
+                    addFieldsBic(gbc);
+                else
+                    addFieldsDec(gbc);
+                repaint();
+
+
             }
         });
     }
